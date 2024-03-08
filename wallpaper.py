@@ -50,12 +50,10 @@ def prepare():
     create directories for background images and xml files
     checks whether xml files exist
     """
+    if os.path.isfile(GNOME_XML) and os.path.isfile(BACKGROUND_XML):
+        return True
     for path in [GNOME_BACKGROUND_XML_PATH, BACKGROUND_PATH]:
         os.system("mkdir -p {}".format(path))
-
-    if os.path.isfile(GNOME_XML) and os.path.isfile(BACKGROUND_XML):
-        os.environ["WALLPAPER_SETUP"] = "True"
-        return True
 
 
 def setup():
@@ -74,8 +72,6 @@ def setup():
     # create background xml file
     with open(BACKGROUND_XML, 'w+', encoding='utf-8') as bgxml:
         bgxml.write(BACKGROUND_XML_CONTENT)
-
-    os.environ["WALLPAPER_SETUP"] = "True"
 
 
 def main():
@@ -97,6 +93,5 @@ def main():
 
 
 if __name__ == "__main__":
-    if os.getenv("WALLPAPER_SETUP") != "True":
-        setup()
+    setup()
     main()
